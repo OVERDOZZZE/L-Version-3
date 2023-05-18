@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+    <p>Author: {{ book.author.name }}</p>
+    <p>Author email: {{ book.author.email }}</p>
+    <p>Publisher: {{ book.publisher.name }}</p>
+    <p>Publisher address: {{ book.publisher.address }}</p>
+    <p>Publication date: {{ book.publication_date }}</p>
+    <img src="{{ book.cover_photo.url }}" alt="" width="600">
+
+</body>
+</html>
+
+
