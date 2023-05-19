@@ -17,6 +17,17 @@
         </li>
     </ul>
     {% endfor %}
+        <div class="pagination">
 
+            <span class="step-links">
+                 {% if books.has_previous %}
+                <a href="?page={{ books.previous_page_number }}"><</a>
+                {% endif %}
+
+                {% if books.has_next %}
+                    <a href="?page={{ books.next_page_number }}">></a>
+                {% endif %}
+            </span>
+        </div>
 </body>
 </html>
