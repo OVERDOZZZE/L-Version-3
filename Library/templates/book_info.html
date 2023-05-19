@@ -14,7 +14,30 @@
     <p>Publisher address: {{ book.publisher.address }}</p>
     <p>Publication date: {{ book.publication_date }}</p>
     <img src="{{ book.cover_photo.url }}" alt="" width="600">
+<!--    {% if request.user.is_authenticated %}-->
+    <form method="POST" action="{% url 'update_book' book.id %}">
+        {% csrf_token %}
+        <input type="text" id="title" name="title" value="{{ book.title }}">
 
+        <select name="author_id" id="author_id">
+            {% for i in authors %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="publisher_id" id="publisher_id">
+            {% for i in publishers %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="date" id="publication_date" name="publication_date" value="{{ date }}">
+
+        <input type="file" id="cover_photo" name="cover_photo" value="{{ book.cover_photo }}">
+
+        <button type="submit">Update</button>
+    </form>
+    {% endif %}
 </body>
 </html>
 

@@ -17,8 +17,8 @@ def all_books(request):
     return render(request, 'all_books.html', context=context)
 
 
-def book_info(request, pk):
-    book = Book.objects.get(id=pk)
+def book_info(request, id):
+    book = Book.objects.get(id=id)
     formatted_date = book.publication_date.strftime("%Y-%m-%d")
     authors = Author.objects.all()
     publishers = Publisher.objects.all()
