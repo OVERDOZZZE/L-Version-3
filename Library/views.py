@@ -1,4 +1,7 @@
+import time
+
 from django.contrib.auth import authenticate, login
+from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
@@ -86,8 +89,13 @@ def alter_book(request, id):
         book.author = Author.objects.get(id=request.POST.get('author_id'))
         book.publisher = Publisher.objects.get(id=request.POST.get('publisher_id'))
         book.publication_date = request.POST.get('publication_date')
-        if request.POST.get('cover_photo'):
-            book.cover_photo = '{}{}'.format('media/', request.POST.get('cover_photo'))
+        cover_photo = request.FILES.get('cover_photo')
+        if cover_photo:
+            filename = '{}_{}'.format(int(time.time()), cover_photo.name)
+            filepath = default_storage.save('media/' + filename, cover_photo)
+            book.cover_photo = filepath
+
         book.save()
+        return redirect('book_detail', id=id)
 
     return redirect('book_detail', id=id)

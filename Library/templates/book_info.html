@@ -15,7 +15,7 @@
     <p>Publication date: {{ book.publication_date }}</p>
     <img src="{{ book.cover_photo.url }}" alt="" width="600">
 <!--    {% if request.user.is_authenticated %}-->
-    <form method="POST" action="{% url 'update_book' book.id %}">
+    <form method="POST" action="{% url 'update_book' book.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="text" id="title" name="title" value="{{ book.title }}">
 
