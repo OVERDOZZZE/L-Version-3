@@ -7,9 +7,9 @@ urlpatterns = [
     path("", all_books, name='all_books'),
     path("detail_book/<int:id>/", book_info, name='book_detail'),
     path("detail_book/<int:id>/update/", alter_book, name='update_book'),
-    path("add_book/", new_book),
-    path("add_author/", new_author),
-    path("add_publisher/", new_publisher),
+    path("add_book/", new_book, name='add_book'),
+    path("add_author/", new_author, name='add_author'),
+    path("add_publisher/", new_publisher, name='add_publisher'),
     path('login/', login_func, name='login')
 ]
 

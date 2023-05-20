@@ -5,29 +5,182 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .container {
+          margin: 0 auto;
+          max-width: 1200px;
+          background-color: #fff;
+          padding: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+          background-color: #f1f1f1;
+        }
+
+        h1 {
+          color: #333;
+          text-align: center;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        li {
+          background-color: #fff;
+          margin-bottom: 10px;
+          padding: 20px;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          font-size: 21px
+        }
+
+        li a {
+          color: #333;
+          text-decoration: none;
+          font-weight: bold;
+          font-size: 23px
+        }
+
+        li a:hover {
+          text-decoration: underline;
+        }
+
+
+        .pagination {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+
+        .step-links {
+          margin: 0 10px;
+        }
+
+        .step-links a {
+          color: #333;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        .step-links a:hover {
+          text-decoration: underline;
+        }
+
+        img {
+          display: block;
+          margin-top: 10px;
+          max-width: 100%;
+          height: auto;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons {
+          display: flex;
+          justify-content: start;
+          margin-top: 20px;
+        }
+
+        .buttons button {
+          border: none;
+          background-color: black;
+          color: #fff;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin-right: 10px;
+          margin-bottom: 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .buttons button a {
+          color: #fff;
+          text-decoration: none;
+        }
+
+        .buttons button:hover {
+          background-color: #45a049;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .step-links {
+            display: inline-block;
+        }
+
+        .step-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 8px 12px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f2f2f2;
+        }
+
+        .step-links a:hover {
+            background-color: #ddd;
+            text-decoration: none
+        }
+
+        .step-links .current-page {
+            color: #fff;
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
-    {% for book in books %}
-    <ul>
-        <li>
-            <a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a>
-            {{ book.author.name }}
-            {{ book.publisher.name }}
-            {{ book.publication_date }}
-        </li>
-    </ul>
-    {% endfor %}
-        <div class="pagination">
-
-            <span class="step-links">
-                 {% if books.has_previous %}
-                <a href="?page={{ books.previous_page_number }}"><</a>
-                {% endif %}
-
-                {% if books.has_next %}
-                    <a href="?page={{ books.next_page_number }}">></a>
-                {% endif %}
-            </span>
+    <div class="container">
+        <h1>All books</h1>
+        <div class="buttons">
+            <a href="{% url 'login' %}"><button>Login</button></a>
+            <a href="{% url 'add_book' %}"><button>Add book</button></a>
+            <a href="{% url 'add_author' %}"><button>Add author</button></a>
+            <a href="{% url 'add_publisher' %}"><button>Add publisher</button></a>
         </div>
+        {% for book in books %}
+        <ul>
+            <li>
+                <a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a>
+                {{ book.author.name }}
+                {{ book.publisher.name }}
+                {{ book.publication_date }}
+                <a href="{% url 'book_detail' book.pk %}"><img src="{{ book.cover_photo.url }}" alt="" width="400"></a>
+            </li>
+        </ul>
+        {% endfor %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if books.has_previous %}
+            <a href="?page={{ books.previous_page_number }}"><</a>
+        {% endif %}
+
+        {% for i in books.paginator.page_range %}
+            {% if books.number == i %}
+                <a class="current-page" href="?page={{ i }}">{{ i }}</a>
+            {% else %}
+                <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_page_number }}">></a>
+        {% endif %}
+    </span>
+</div>
+
+    </div>
 </body>
 </html>

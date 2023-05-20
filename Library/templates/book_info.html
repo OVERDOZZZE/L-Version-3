@@ -5,16 +5,82 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Добавленные современные стили */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .book-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            margin-left: -5px
+        }
+
+        form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        select,
+        input[type="date"],
+        input[type="file"],
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: black;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ book.title }}</h1>
-    <p>Author: {{ book.author.name }}</p>
-    <p>Author email: {{ book.author.email }}</p>
-    <p>Publisher: {{ book.publisher.name }}</p>
-    <p>Publisher address: {{ book.publisher.address }}</p>
-    <p>Publication date: {{ book.publication_date }}</p>
-    <img src="{{ book.cover_photo.url }}" alt="" width="600">
-<!--    {% if request.user.is_authenticated %}-->
+    <div class="book-info">
+        <h1>{{ book.title }}</h1>
+        <p>Author: {{ book.author.name }}</p>
+        <p>Author email: {{ book.author.email }}</p>
+        <p>Publisher: {{ book.publisher.name }}</p>
+        <p>Publisher address: {{ book.publisher.address }}</p>
+        <p>Publication date: {{ book.publication_date }}</p>
+        <img src="{{ book.cover_photo.url }}" alt="" width="600">
+    </div>
+
     <form method="POST" action="{% url 'update_book' book.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="text" id="title" name="title" value="{{ book.title }}">
@@ -37,7 +103,6 @@
 
         <button type="submit">Update</button>
     </form>
-    {% endif %}
 </body>
 </html>
 
